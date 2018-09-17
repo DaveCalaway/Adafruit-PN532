@@ -167,7 +167,8 @@ class Adafruit_PN532{
   bool     writeGPIO(uint8_t pinstate);
   uint8_t  readGPIO(void);
   bool     setPassiveActivationRetries(uint8_t maxRetries);
-  bool     shutDown( uint8_t wakeUpPin );
+  bool     shutDown_button( uint8_t wakeUpPin );
+  bool     shutDown(void);
 
   // ISO14443A functions
   bool readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, uint8_t * uidLength, uint16_t timeout = 0); //timeout 0 means no timeout - will block forever.

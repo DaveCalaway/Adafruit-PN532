@@ -1823,7 +1823,8 @@ uint8_t Adafruit_PN532::spi_read(void) {
 
  */
 /**************************************************************************/
-bool Adafruit_PN532::shutDown(uint8_t wake_up){
+
+bool Adafruit_PN532::shutDown_button(uint8_t wake_up){
         pn532_packetbuffer[0] = PN532_COMMAND_POWERDOWN;
         pn532_packetbuffer[1] = 0x80; // The wakeup source(s) you want too use
         pn532_packetbuffer[2] = 0x00; // IRQ disabled
@@ -1838,6 +1839,21 @@ bool Adafruit_PN532::shutDown(uint8_t wake_up){
           //Serial.println("waiting");
         }
         delay(2); //Delay to make sure the module is on.
+
+        return true;
+
+}
+
+
+bool Adafruit_PN532::shutDown(void){
+        pn532_packetbuffer[0] = PN532_COMMAND_POWERDOWN;
+        pn532_packetbuffer[1] = 0x80; // The wakeup source(s) you want too use
+        pn532_packetbuffer[2] = 0x00; // IRQ disabled
+
+        if(!sendCommandCheckAck(pn532_packetbuffer, 3))
+                return false;
+
+        delay(2); //Delay to make sure the module is off.
 
         return true;
 
