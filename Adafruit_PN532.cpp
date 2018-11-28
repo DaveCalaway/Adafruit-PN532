@@ -1824,35 +1824,9 @@ uint8_t Adafruit_PN532::spi_read(void) {
  */
 /**************************************************************************/
 
-bool Adafruit_PN532::shutDown_button(uint8_t wake_up){
-        pn532_packetbuffer[0] = PN532_COMMAND_POWERDOWN;
-
-        if( _usingSPI == 1 || _hardwareSPI ==1 ) {
-                pn532_packetbuffer[1] = 0x20; // The wakeup from SPI
-        }
-        else pn532_packetbuffer[1] = 0x80; // The wakeup from I2C
-
-        pn532_packetbuffer[2] = 0x00; // IRQ disabled
-
-        if(!sendCommandCheckAck(pn532_packetbuffer, 3))
-                return false;
-
-        delay(2); //Delay to make sure the module is off.
-
-        pinMode(wake_up,INPUT_PULLUP);
-        while( digitalRead(wake_up) ) {
-                //Serial.println("waiting");
-        }
-        delay(2); //Delay to make sure the module is on.
-
-        return true;
-
-}
-
-
 bool Adafruit_PN532::shutDown(void){
         pn532_packetbuffer[0] = PN532_COMMAND_POWERDOWN;
-        
+
         if( _usingSPI == 1 || _hardwareSPI ==1 ) {
                 pn532_packetbuffer[1] = 0x20; // The wakeup from SPI
         }
